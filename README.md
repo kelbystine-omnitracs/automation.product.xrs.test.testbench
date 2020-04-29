@@ -13,3 +13,13 @@ BasePi
 NodeBasePi
 NodeChromium
 StandaloneChromium
+
+The recommended order of setup for the test bench:
+
+1. RaspberryPiSetup
+2. JavaSetup
+3. AdnroidSDKSetup
+4. NodeJsSetup
+5. AppiumSetup
+6. DockerSetup
+7. DockerImageSetup
