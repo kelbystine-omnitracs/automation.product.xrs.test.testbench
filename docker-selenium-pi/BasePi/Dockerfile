@@ -1,7 +1,8 @@
 FROM ubuntu:bionic-20200219
-LABEL authors="kstine@gmail.com"
+LABEL authors="kstine@omnitracs.com"
 
 #================================================
+# Commented out for reference only
 # Customize sources for apt-get
 #================================================
 # RUN  echo "deb http://archive.ubuntu.com/ubuntu bionic main universe\n" > /etc/apt/sources.list \
