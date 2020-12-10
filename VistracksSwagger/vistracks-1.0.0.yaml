@@ -37,6 +37,36 @@ paths:
         - BasicAuth: []
         - OAuth2: []
       x-codegen-request-body-name: body
+  /api/v2/hos3AccountOnBoarding:
+    post:
+      tags:
+        - hos3AccountOnBoarding
+      summary: Additional hos3 onboarding of an existing account
+      operationId: hos3OnBoardAccounts
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: Updating an existing account with hos3 meta data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3AccountOnBoarding'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3AccountOnBoarding'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
   /api/v2/accountProperties/{recordIds}:
     get:
       tags:
@@ -799,6 +829,7 @@ paths:
       summary: Deletes an equipment record.
       description: |
         Supports soft delete. Requires the PERM_EDIT_EQUIPMENT permission for Users and Drivers. Drivers can be allowed to delete Equipment if the “hos.driver.equipment.delete” Account Property and their “HOS_DELETE_EQUIPMENT” User Preference are both set to true.
+
         Delete for the Equipment API is implemented using a soft-delete. This prevents SQL’s Cascade Delete from deleting any Driving records associated with a deleted piece of Equipment. Eventually, following the motor carrier’s data retention policy, the soft-delete will become a hard-delete.
       operationId: deleteEquipment
       parameters:
@@ -1516,6 +1547,7 @@ paths:
       summary: Get a list of driver histories based on input record identifiers.
       description: |
         The Driver History events on his/her Logs are stored and accessed using the driverHistories endpoint.  This API provides access to Driving History information such as the Record Status, Event Record Origin, and Event Type for records which are either recorded automatically, created manually by a Driver, or created manually by an Authorized Personnel.
+
           * Driver’s Duty Status change – OnDuty, OffDuty, Driving, Sleeper, WaitingAtSite
           * Intermediate Log – recorded at a set interval while the driver is driving
           * Personal Driving Status – Yard Moves or Personal Conveyance
@@ -1747,6 +1779,7 @@ paths:
         in: query
         description: |
           Retrieves matching records based on Driver type, depending on the boolean value specified. (e.g. system=true, false by default)
+
             * If true, only the unidentifiedDriver Account is retrieved.
             * If false, only actual Drivers are retrieved.
             * Wild-carding using system=* or system=true,false will retrieve all Drivers
@@ -1842,6 +1875,7 @@ paths:
         description: |
           Retrieves matching records based on Driver type, depending on
            the boolean value specified. (e.g. system=true, false by default)
+
             * If true, only the unidentifiedDriver Account is retrieved.
             * If false, only actual Drivers are retrieved.
             * Wild-carding using system=* or system=true,false will retrieve all Drivers
@@ -2248,6 +2282,7 @@ paths:
         in: query
         description: |
           Sort order:
+
             * `id` – Sort records by their id field in ascending order (DEFAULT)
             * `-id` – Sort records by their id field in descending order
             * `name` – Sort records by their name field in ascending order
@@ -2442,6 +2477,7 @@ paths:
         in: query
         description: |
           Retrieves matching records based on User type, depending on the boolean value specified. (e.g. system=true, false by default)
+
             * If true, only the unidentifiedUser Account is retrieved.
             * If false, only actual Users are retrieved.
             * Wild-carding using system=* or system=true,false will retrieve all Users
@@ -2533,6 +2569,7 @@ paths:
         description: |
           Retrieves matching records based on User type, depending on
            the boolean value specified. (e.g. system=true, false by default)
+
             * If true, only the unidentifiedUser Account is retrieved.
             * If false, only actual Users are retrieved.
             * Wild-carding using system=* or system=true,false will retrieve all Users
@@ -3289,6 +3326,7 @@ paths:
       summary: Update an user role.
       description: |
         Can produce the following errors
+
         * Permission <permission name> does not exists
           PUT error because the Permission does not exist in the Account.
         * User cannot update User role that contains: <permission name>
@@ -3329,6 +3367,7 @@ paths:
       summary: Creates a user role.
       description: |
         Can produce the following errors
+
         * The new User role to insert should not have an id.
           POST error because request must not contain an id
         * Permission <permission name> does not exists
@@ -3379,8 +3418,6 @@ paths:
         - $ref: "#/components/parameters/driverHistoryToEventTimeParam"
         - $ref: "#/components/parameters/fromChangeTimestampParam"
         - $ref: "#/components/parameters/toChangeTimestampParam"
-        - $ref: "#/components/parameters/offsetParam"
-        - $ref: "#/components/parameters/limitParam"
         - $ref: "#/components/parameters/driverAliasArrayParam"
         - name: sort
           in: query
@@ -4290,6 +4327,19 @@ components:
           type: string
           format: uuid
           description: Account unique identifier
+    Hos3AccountOnBoarding:
+      type: object
+      properties:
+        terminalUuid:
+          type: string
+          format: uuid
+          description: uuid of the terminal associated with the account (optional)
+        carrierUuid:
+          type: string
+          format: uuid
+          description: uuid of the carrier associated with the account (optional)
+        driverSettings:
+          $ref: '#/components/schemas/Driver'
     AlertNotification:
       required:
       - details
@@ -4512,6 +4562,7 @@ components:
           type: string
           description: |
             The state of the license plate of this Asset. Can either be one of the following state codes:
+
               * USA: AL, AK, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
               * USA Protectorates: AS, DC, GU, MP, PR, VI
               * Canada: AB, BC, MB, NB, NF, NS, NT, ON, PE, QC, SK, YT
@@ -4928,6 +4979,7 @@ components:
           type: string
           description: |
             The state of the license plate of this Equipment. Can either be one of the following state codes:
+
               * USA: AL, AK, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
               * USA Protectorates: AS, DC, GU, MP, PR, VI
               * Canada: AB, BC, MB, NB, NF, NS, NT, ON, PE, QC, SK, YT
@@ -5134,6 +5186,8 @@ components:
       - DiagTransferClear
       - DiagUnidentifiedClear
       - DiagOtherClear
+      - EldAuthenticationRemark
+      - EldUnauthenticationRemark
     GpsSource:
       type: string
       enum:
@@ -5172,6 +5226,7 @@ components:
               * com.vistracks.vtlib.VBUS_DATA_SYNC_ENABLED
               * com.vistracks.vtlib.SERVER_CONTROLS_SETTINGS
               * HOS_DRIVER_EDITING_ENABLED
+              * COLOR_THEME
           enum:
           - com.vistracks.vtlib.GPS_SECONDS_INTERVAL
           - com.vistracks.vtlib.SHOW_DRIVER_LOGS
@@ -5180,6 +5235,7 @@ components:
           - com.vistracks.vtlib.VBUS_DATA_SYNC_ENABLED
           - com.vistracks.vtlib.SERVER_CONTROLS_SETTINGS
           - HOS_DRIVER_EDITING_ENABLED
+          - COLOR_THEME
         lastChangedDate:
           type: string
           description: 'Auto-generated timestamp of the last change made to this record.
@@ -5429,11 +5485,20 @@ components:
           type: integer
           description: The id of the Account that owns this record.
           format: int64
+        accountUuid:
+          type: string
+          description: The optional uuid of the Account that owns this record. Will be used over accountId if match found.
+          format: uuid
         assetId:
           type: integer
           description: The id of the Vehicle that the Driver used to perform this
             event.
           format: int64
+        assetUuid:
+          type: string
+          description: The optional uuid of the Vehicle that the Driver used to perform this
+            event. Will be used over assetId if match found.
+          format: uuid
         autoEventEndTimestamp:
           type: string
           description: 'Date and time when the event has ended. This is only present
@@ -5481,12 +5546,23 @@ components:
           type: string
           description: The name of the User who is requesting an edit from the Driver.
             This is not returned for events that have not been edited.
+        changeRequestedByUuid:
+          type: string
+          description: The uuid of the User who is requesting an edit from the Driver.
+            Will override changeRequestedByName and changeRequestedBy if match found.
+          format: uuid
         coDriverUsernames:
           type: string
           description: List of email addresses of co-drivers.
         coDriverUserIds:
           type: string
           description: List of ids of co-drivers.
+        coDriverUserUuids:
+          type: array
+          description: List of optional uuids of co-drivers. Will be used instead of coDriverUserIds/coDriverUsernames if match found.
+          items:
+            type: string
+            format: uuid
         cycleResetTimestamp:
           type: string
           description: 'A Date and time when the cycle reset has been taken. Note:
@@ -5530,6 +5606,11 @@ components:
               * Incorrect Data Entered
               * Driver Not Logged On
               * Engineers Road Test"
+        editTime:
+          type: string
+          description: 'Represents the UTC time at which the Driver/Host user made the edit. Note: Format is in timestamp
+            and timezone (YYYY-MM-DDTHH:MM:SS.sssZ, e.g: 1970-01-01T00:00:00.000Z)'
+          format: date-time
         endEventTime:
           type: string
           description: 'Date and time when the event ended Note: Format is in timestamp
@@ -5575,6 +5656,9 @@ components:
           type: number
           description: Latitude of the location if available.
           format: double
+        localTime:
+          type: string
+          format: date-time
         location:
           type: string
           description: The address where event was initiated.
@@ -5600,6 +5684,8 @@ components:
           $ref: '#/components/schemas/RecordStatus'
         regulationMode:
           $ref: '#/components/schemas/RegulationMode'
+        rejectionReason:
+          type: string
         relatedUuid:
           type: string
           description: The UUID of the Driver History that is related to the current
@@ -5608,6 +5694,7 @@ components:
           type: string
           description: |
             The state where the event was recorded. This is to be used for State Mileage calculations. Can either be one of the following state codes:
+
               * USA: AL, AK, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
               * USA Protectorates: AS, DC, GU, MP, PR, VI
               * Canada: AB, BC, MB, NB, NF, NS, NT, ON, PE, QC, SK, YT
@@ -5623,6 +5710,13 @@ components:
           type: string
           description: The Trailer names associated with the current PowerOn or PowerOff
             event.
+        trailerUuids:
+          type: array
+          description: List of optional uuids of the trailers associated with the current PowerOn or PowerOff.
+            Will override trailerNumbers.
+          items:
+            type: string
+            format: uuid
         useCycleReset:
           type: boolean
           description: Indicates when a driver has taken a cycle reset.
@@ -5630,6 +5724,11 @@ components:
           type: integer
           description: The id of the Driver who performed this Driver History event.
           format: int64
+        userUuid:
+          type: string
+          description: The optional uuid of the Driver who performed this Driver History event.
+            Will be used over userId if match found.
+          format: uuid
         username:
           type: string
           description: The username of the Driver who performed this Driver History
@@ -5750,6 +5849,9 @@ components:
             in the app.
         cargo:
           $ref: '#/components/schemas/Cargo'
+        cargoChangeAllowed:
+          type: boolean
+          description: Can cargo type be changed?
         carrierChangeAllowed:
           type: boolean
           description: Can carrier be changed?
@@ -5761,6 +5863,7 @@ components:
           type: string
           description: |
             Commercial Driver’s License Issuing State. Can either be one of the following state codes:
+
               * `USA`: AL, AK, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
               * `USA Protectorates`: AS, DC, GU, MP, PR, VI
               * `Canada`: AB, BC, MB, NB, NF, NS, NT, ON, PE, QC, SK, YT
@@ -5772,6 +5875,7 @@ components:
           type: string
           description: |
             This indicates the type of Canada driving cycle associated with the record when Canada is region is selected. This can either be one of the following:
+
               * Can70hr7daysSouth
               * Can120hr14daysSouth
               * Can80hr7daysNorth
@@ -5781,6 +5885,7 @@ components:
           type: string
           description: |
             This indicates the type of USA driving cycle associated with the record when USA region is selected. Can either be one of the following:
+
               * US60hr7days
               * US70hr8days
               * Alabama60hr7days
@@ -5886,6 +5991,10 @@ components:
           type: string
           description: Initial password for Driver.
           format: password
+        pcMaxDistanceUSA:
+          type: integer
+          description: Personal conveyance max distance
+          format: int32
         recipient:
           type: string
           description: To whom the reports of the Driver will be emailed
@@ -5920,6 +6029,15 @@ components:
           type: string
           format: uuid
           description: Unique identifier
+        yardMoveTermination:
+          $ref: '#/components/schemas/YardMoveTermination'
+          description: The manner in which a yard move is detected to be terminated.
+    YardMoveTermination:
+      type: string
+      enum: 
+        - POWER_CYCLE
+        - SPEED
+        - BOTH
     DriverDaily:
       required:
       - carrier
@@ -6076,7 +6194,9 @@ components:
           type: string
           description: | # TODO: change this to enum?
             Driver Exceptions to DOT rules that were taken on this day.
+
               Available exceptions for USA are:
+
                 * AdverseDrivingConditions
                 * Agricultural
                 * Asphalt30MinOnDutyBreak
@@ -6098,7 +6218,9 @@ components:
                 * TransportOfBeesOrLivestock
                 * TwentyFourHourRestart
                 * UtilityServiceVehicle
+
               For Canada the available exceptions are:
+
                 * CanSpecialPermit
                 * CanOilWellServicePermit
                 * CanEmergencyConditions
@@ -6117,6 +6239,7 @@ components:
           type: string
           description: | # TODO: change this to enum?
             The ID of the time zone used by the Driver on this day:
+
               * America/Anchorage
               * America/Phoenix
               * Canada/Atlantic
@@ -6786,7 +6909,9 @@ components:
           type: string
           description: |
             The name of the User Role.
+
             Available roles are:
+
             * USER_ROLE_ACCOUNTADMIN
               Indicates if a User is an Account Admin. An Account Admin has overall access to the Account.
               * Can manage Accounts that are under his/her own Account.
@@ -6931,6 +7056,7 @@ components:
           type: string
           description: |
             The state where the Terminal is located. Can either be one of the following state codes:
+
               * USA: AL, AK, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
               * USA Protectorates: AS, DC, GU, MP, PR, VI
               * Canada: AB, BC, MB, NB, NF, NS, NT, ON, PE, QC, SK, YT
