@@ -1327,6 +1327,7 @@ paths:
     delete:
       tags:
         - hosCarrierProperties
+      deprecated: true
       summary: Deletes a single hos carrier properties record.
       operationId: deleteHosCarrierProperties
       parameters:
@@ -1348,6 +1349,7 @@ paths:
     get:
       tags:
         - hosCarrierProperties
+      deprecated: true
       summary: The HOS Carrier Properties endpoint handles a collection of Carriers from which admin personnel can
         assign Drivers to, depending on which Carrier they are working for on that particular day.
         It should be noted that values saved using this API are saved into the Account Property named
@@ -1370,6 +1372,7 @@ paths:
     put:
       tags:
         - hosCarrierProperties
+      deprecated: true
       summary: Update a list of hos carrier properties records
       operationId: updateHosCarrierProperties
       parameters:
@@ -1399,8 +1402,105 @@ paths:
     post:
       tags:
         - hosCarrierProperties
+      deprecated: true
       summary: Creates new hos carrier properties records.
       operationId: createHosCarrierProperties
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The hos carrier properties records to create.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/HosCarrierProperties'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HosCarrierProperties'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+  /api/v3/hosCarrierProperties:
+    get:
+      tags:
+        - hosCarrierPropertiesV3
+      summary: The HOS Carrier Properties endpoint handles a collection of Carriers from which admin personnel can
+        assign Drivers to, depending on which Carrier they are working for on that particular day.
+        It should be noted that values saved using this API are saved into the Account Property named
+        “hos.carrier.information” and if the default Carrier is edited, it also updates the “hos.mainoffice.*” Account Properties.
+      operationId: getHosCarrierPropertiesV3
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+        - $ref: "#/components/parameters/carrierNameParam"
+        - $ref: "#/components/parameters/idParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/offsetParam"
+        - in: query
+          name: sort
+          required: false
+          description: >
+            Sort: order
+              * `id` – Sort records by their id field in ascending order (DEFAULT)
+              * `-id` – Sort records by their id field in descending order
+              * `name` – Sort records by their name field in ascending order
+              * `-name` – Sort records by their name field in descending order
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HosCarrierProperties'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+    put:
+      tags:
+        - hosCarrierPropertiesV3
+      summary: Update a list of hos carrier properties records
+      operationId: updateHosCarrierPropertiesV3
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The hos carrier properties records to update
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/HosCarrierProperties'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HosCarrierProperties'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - hosCarrierPropertiesV3
+      summary: Creates new hos carrier properties records.
+      operationId: createHosCarrierPropertiesV3
       parameters:
         - $ref: "#/components/parameters/accountUuidHeader"
       requestBody:
@@ -1937,6 +2037,27 @@ paths:
       security:
       - BasicAuth: []
       - OAuth2: []
+  /api/v2/drivers/uuid/{uuid}:
+    get:
+      tags:
+        - driver
+      summary: Get driver by UUID (without account). Although an account is passed in, this is for authentication. The driver need not be associated with this account id.
+      operationId: getDriversByUuid
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+        - $ref: "#/components/parameters/uuidPathParam"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Driver'
+      security:
+        - BasicAuth: [ ]
+        - OAuth2: [ ]
   /api/v2/drivers:
     put:
       tags:
@@ -2330,6 +2451,7 @@ paths:
       operationId: getAccountsTree
       parameters:
       - $ref: "#/components/parameters/accountUuidHeader"
+      - $ref: "#/components/parameters/accountNameParam"
       - name: root-account-id
         in: query
         description: The account id of the root account to fetch. Otherwise uses the
@@ -4188,7 +4310,30 @@ paths:
       - BasicAuth: []
       - OAuth2: []
       x-codegen-request-body-name: body
-
+  /api/v2/driverHistories/meta/driversWhoHaveDrivenVehicle:
+    get:
+      tags:
+      - driversWhoHaveDrivenVehicle
+      summary: Get drivers who have driven the specified vehicle in the selected range date.
+      operationId: getDriversWhoHaveDriven
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+        - $ref: "#/components/parameters/assetIdParam"
+        - $ref: "#/components/parameters/fromEventTimeParam"
+        - $ref: "#/components/parameters/toEventTimeParam"
+      responses:
+        200:
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DriversHaveDriven'
+      security:
+      - BasicAuth: []
+      - OAuth2: []
+                
 components:
   schemas:
     AccountProperty:
@@ -5188,6 +5333,8 @@ components:
       - DiagOtherClear
       - EldAuthenticationRemark
       - EldUnauthenticationRemark
+      - AddedExceptionRemark
+      - RemovedExceptionRemark
     GpsSource:
       type: string
       enum:
@@ -5349,7 +5496,7 @@ components:
           description: The city where the Carrier is located
         country:
           $ref: '#/components/schemas/Country'
-        default:
+        isDefault:
           type: boolean
           description:  Indicates whether the Carrier is the default Carrier or not.
             Only one Carrier can be set as default at any given time. Setting this to true for one Carrier will set all other Carriers to false
@@ -5380,6 +5527,11 @@ components:
         street:
           type: string
           description: The street where the Carrier is located
+        street2:
+          type: string
+        miscInfo:
+          type: string
+          description: Miscellaneous information about Carrier
         timezone:
           $ref: '#/components/schemas/TimeZone'
         zip:
@@ -5672,6 +5824,11 @@ components:
         note:
           type: string
           description: An optional note entered by driver associated with this event.
+        note2:
+          type: array
+          description: Additional optional notes entered by driver associated with this event.
+          items:
+            type: string
         odometerKm:
           type: number
           description: Odometer value of the Vehicle during this event.
@@ -5706,6 +5863,8 @@ components:
           type: number
           description: The speed of the Vehicle at the time of the current event
           format: double
+        source:
+          $ref: '#/components/schemas/DriverHistorySource'
         trailerNumbers:
           type: string
           description: The Trailer names associated with the current PowerOn or PowerOff
@@ -5758,12 +5917,21 @@ components:
           format: int32
         subcode:
           type: integer
-          format: int32  
+          format: int32
+        modifiedAt:
+          type: string
+          description: 'Date and time when the event was generated/updated.'
+          format: date-time
       description: The Driver History events on his/her Logs are stored and accessed
         using the driverHistories endpoint.  This API provides access to Driving History
         information such as the Record Status, Event Record Origin, and Event Type
         for records which are either recorded automatically, created manually by a
         Driver, or created manually by an Authorized Personnel.
+    DriverHistorySource:
+      type: string
+      enum:
+        - ES_TRANSLATION
+        - XRS_TRANSLATION
     RecordOrigin:
       type: string
       enum:
@@ -5805,6 +5973,10 @@ components:
       - startTimeOfDay
       type: object
       properties:
+        accountId:
+          type: integer
+          format: int64
+          description: The account id of the account this driver is associated with.
         active:
           type: boolean
           description: Indicates if the Driver is currently active or not
@@ -5881,6 +6053,8 @@ components:
               * Can80hr7daysNorth
               * Can120hr14daysNorth
               * Alberta
+        cycleChangeAllowed:
+          type: boolean
         cycleUsa:
           type: string
           description: |
@@ -5934,6 +6108,8 @@ components:
             shown for active Drivers. Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ,
             e.g: 1970-01-01T00:00:00.000Z)'
           format: date-time
+        driverEditingEnabled:
+          type: boolean
         email:
           type: string
           description: Email address that uniquely identifies Driver within the system.
@@ -5987,6 +6163,8 @@ components:
           description: Indicates if the Driver can manage Equipment. Cannot be used
             in POST and PUT, only in GET.
           format: string
+        offSbPairingMode:
+          $ref: '#/components/schemas/OffSbPairingMode'
         password:
           type: string
           description: Initial password for Driver.
@@ -5995,6 +6173,10 @@ components:
           type: integer
           description: Personal conveyance max distance
           format: int32
+        promptLoginValue:
+          $ref: '#/components/schemas/PromptValue'
+        promptLogoutValue:
+          $ref: '#/components/schemas/PromptValue'
         recipient:
           type: string
           description: To whom the reports of the Driver will be emailed
@@ -6031,13 +6213,27 @@ components:
           description: Unique identifier
         yardMoveTermination:
           $ref: '#/components/schemas/YardMoveTermination'
-          description: The manner in which a yard move is detected to be terminated.
     YardMoveTermination:
       type: string
       enum: 
         - POWER_CYCLE
         - SPEED
         - BOTH
+      description: The manner in which a yard move is detected to be terminated.
+    OffSbPairingMode:
+      type: string
+      enum:
+        - PAIRING_DISABLED
+        - PAIRING_ASSUMED
+        - PAIRING_ALLOWED
+    PromptValue:
+      type: string
+      enum:
+        - LOGIN_ADJUST
+        - LOGIN
+        - LOGOUT_ADJUST
+        - LOGOUT
+        - NONE
     DriverDaily:
       required:
       - carrier
@@ -7398,7 +7594,26 @@ components:
             Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ, e.g:
             1970-01-01T00:00:00.000Z)'
           format: date-time
-
+    DriversHaveDriven:
+      type: object
+      properties:
+        eventTime:
+          type: string
+          description: "Most recent event time associated with the driver and the asset id
+             Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ, e.g:
+             1970-01-01T00:00:00.000Z)."
+          format: date-time
+        firstName:
+          type: string
+          description: "First name of the driver."
+        lastName:
+          type: string
+          description: "Last name of the driver."
+        userId:
+          type: integer
+          format: int64
+          description: "ID of Driver associated with this data."  
+        
   parameters:
     accountUuidHeader:
       in: header
@@ -7738,6 +7953,13 @@ components:
         all UUIDs by default)
       schema:
         type: string
+    uuidPathParam:
+      name: uuid
+      in: path
+      description: Retrieves matching records with the specified UUID
+      required: true
+      schema:
+        type: string
     driverAliasArrayParam:
       name: driver-alias
       in: query
@@ -8000,6 +8222,24 @@ components:
       in: query
       schema:
         type: string
+    accountNameParam:
+      name: account-name
+      in: query
+      description: Filters accounts or sub-accounts that match the provided account name
+      schema:
+        type: string
+    carrierNameParam:
+      name: carrierName
+      in: query
+      schema:
+        type: string
+    idParam:
+      name: id
+      in: query
+      schema:
+        type: integer
+        format: int64
+
   securitySchemes:
     BasicAuth:
       type: http
