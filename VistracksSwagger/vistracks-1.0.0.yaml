@@ -42,7 +42,7 @@ paths:
       tags:
         - hos3AccountOnBoarding
       summary: Additional hos3 onboarding of an existing account
-      operationId: hos3OnBoardAccounts
+      operationId: hos3OnBoardAccountsCreate
       parameters:
         - $ref: "#/components/parameters/accountUuidHeader"
       requestBody:
@@ -67,6 +67,295 @@ paths:
         - BasicAuth: []
         - OAuth2: []
       x-codegen-request-body-name: body
+    put:
+      tags:
+        - hos3AccountOnBoarding
+      summary: Additional hos3 onboarding of an existing account
+      operationId: hos3OnBoardAccountsUpdate
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: Updating an existing account with hos3 meta data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3AccountOnBoarding'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3AccountOnBoarding'
+      security:
+        - BasicAuth: [ ]
+        - OAuth2: [ ]
+      x-codegen-request-body-name: body
+  /api/v2/hos3DriverOnBoarding:
+    post:
+      tags:
+        - hos3DriverOnBoarding
+      summary: Additional hos3 onboarding of a driver
+      operationId: hos3OnBoardDriversCreate
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: Updating an existing driver with hos3 meta data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3DriverOnBoarding'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3DriverOnBoarding'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+    put:
+      tags:
+        - hos3DriverOnBoarding
+      summary: Additional hos3 onboarding of a driver
+      operationId: hos3OnBoardDriversUpdate
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: Updating an existing driver with hos3 meta data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3DriverOnBoarding'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3DriverOnBoarding'
+      security:
+        - BasicAuth: [ ]
+        - OAuth2: [ ]
+      x-codegen-request-body-name: body
+  /api/v2/hos3OperationalUnit:
+    get:
+      tags:
+        - hos3OperationalUnit
+      summary: Get matching hos3 operational units.
+      operationId: getHos3OperationalUnit
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+        - $ref: "#/components/parameters/uuidParam"
+        - $ref: "#/components/parameters/parentUuidParam"
+        - $ref: "#/components/parameters/businessAccountUuidParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/offsetParam"
+        - name: sort
+          in: query
+          description: |
+            Sort order:
+              * `created-date` – Sort records by their created date field in ascending order (DEFAULT)
+              * `-created-date` – Sort records by their created date field in descending order
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnit'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+    put:
+      tags:
+        - hos3OperationalUnit
+      summary: Update a hos3 operational unit record
+      operationId: updateHos3OperationalUnit
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The hos3 operational unit record to update
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3OperationalUnit'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnit'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - hos3OperationalUnit
+      summary: Creates a new hos3 operational unit.
+      operationId: createHos3OperationalUnit
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The hos3 operational unit record to create.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3OperationalUnit'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnit'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+  /api/v2/hos3OperationalUnitDriver:
+    get:
+      tags:
+        - hos3OperationalUnitDriver
+      summary: Get matching hos3 operational unit drivers.
+      operationId: getHos3OperationalUnitDriver
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+        - $ref: "#/components/parameters/operationalUnitUuidParam"
+        - $ref: "#/components/parameters/driverUuidParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/offsetParam"
+        - name: sort
+          in: query
+          description: |
+            Sort order:
+              * `created-date` – Sort records by their created date field in ascending order (DEFAULT)
+              * `-created-date` – Sort records by their created date field in descending order
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnitDriver'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+    put:
+      tags:
+        - hos3OperationalUnitDriver
+      summary: Update a hos3 operational unit driver record
+      operationId: updateHos3OperationalUnitDriver
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The hos3 operational unit record driver to update
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3OperationalUnitDriver'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnitDriver'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - hos3OperationalUnitDriver
+      summary: Creates a new hos3 operational unit driver.
+      operationId: createHos3OperationalUnitDriver
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The hos3 operational unit driver record to create.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Hos3OperationalUnitDriver'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnitDriver'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+  /api/v2/hos3OperationalUnitTree:
+    get:
+      tags:
+        - hos3OperationalUnitTree
+      summary: Get tree structure for all hos3 operational units under business account.
+      operationId: getHos3OperationalUnitTree
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hos3OperationalUnitTree'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
   /api/v2/accountProperties/{recordIds}:
     get:
       tags:
@@ -80,7 +369,7 @@ paths:
       parameters:
       - $ref: "#/components/parameters/accountUuidHeader"
       - $ref: "#/components/parameters/recordIdsParam"
-      - $ref: "#/components/parameters/nameParam"
+      - $ref: "#/components/parameters/nameArrayParam"
       - $ref: "#/components/parameters/fromChangeTimestampParam"
       - $ref: "#/components/parameters/toChangeTimestampParam"
       - $ref: "#/components/parameters/limitParam"
@@ -1539,6 +1828,7 @@ paths:
       - $ref: "#/components/parameters/toChangeTimestampParam"
       - $ref: "#/components/parameters/limitParam"
       - $ref: "#/components/parameters/offsetParam"
+      - $ref: "#/components/parameters/keyArrayParam"
       - name: sort
         in: query
         description: |
@@ -1679,7 +1969,7 @@ paths:
       - $ref: "#/components/parameters/limitParam"
       - $ref: "#/components/parameters/offsetParam"
       - $ref: "#/components/parameters/driverAliasArrayParam"
-      - $ref: "#/components/parameters/driverUuidParam"
+      - $ref: "#/components/parameters/userUuidParam"
       - name: sort
         in: query
         description: |
@@ -1856,6 +2146,80 @@ paths:
       security:
       - BasicAuth: []
       - OAuth2: []
+  /api/v2/driverHistories/meta/unidentifiedDriverHistories:
+    post:
+      tags:
+        - driverHistory
+      summary: Create driver histories for unidentified driver.
+      description: 'The Unidentified Driver History events recorded using this endpoint are the
+        driver’s log and are transferred, after suitable formatting, to the FMCSA
+        upon request.  Events such as OnDuty or OffDuty records from a timekeeping
+        system may also be entered into a driver’s log using this api.  Events in
+        Driver History should never be deleted.  This API is intended to contain the
+        driver’s permanent record of Driver History events. Driver Histories are automatically
+        deleted after a specific period of time following the data retention policy.
+        These are the required fields: userId, uuid, recordStatus, username, eventType,
+        recordOrigin, eventTime. Recommended Fields: all required fields, validBeginTime,
+        validEndTime'
+      operationId: createUnidentifiedDriverHistory
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      requestBody:
+        description: The unidentified driver histories to create.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/DriverHistory'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DriverHistory'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
+    put:
+      tags:
+        - driverHistory
+      summary: Update driver history records for unidentified driver.
+      description: 'Required fields: assetType, name, id. Note: When fields are not
+        included in PUT, they are saved as their default values (false for boolean
+        types, empty strings for text and character types). When there is no visibility
+        set ids saved, the account’s default visibility set is set. Users with PERM_IS_ASSETADMIN
+        only cannot assign or remove visibility sets they do not have access to.'
+      parameters:
+        - $ref: "#/components/parameters/accountUuidHeader"
+      operationId: updateUnidentifiedDriverHistory
+      requestBody:
+        description: The unidentified driver history records to update.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/DriverHistory'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DriverHistory'
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      x-codegen-request-body-name: body
   /api/v2/drivers/meta/names/{recordIds}:
     get:
       tags:
@@ -1907,8 +2271,6 @@ paths:
             * `-id` – Sort records by their id field in descending order
             * `email` – Sort records by their email field in ascending order
             * `-email` – Sort records by their email field in descending order
-            * `last-changed-date` – Sort records by their last change date field in ascending order
-            * `-last-changed-date` – Sort records by their last change date field in descending order
             * `terminal.name` – Sort records by their terminal name in ascending order
             * `-terminal.name` – Sort records by their terminal name in descending order
         schema:
@@ -2800,6 +3162,38 @@ paths:
       - BasicAuth: []
       - OAuth2: []
       x-codegen-request-body-name: body
+  /api/v3/certifiedLogSendEmail/:
+    post:
+      tags:
+      - certifiedLogSendEmail
+      summary: 'Certified Log Send Email is used to send the Driver’s Certified and Uncertified Log(s) to a specific email address. The API accepts a plain HTTP request with parameters specifying which PDF(s) to be retrieved from the server, or a multipart request with parameters and the PDF(s) to be sent to the email address specified. All parameters are required in order to construct the email subject and body.'
+      operationId: certifiedLogSendEmailV3
+      parameters:
+      - $ref: "#/components/parameters/accountUuidHeader"
+      - $ref: "#/components/parameters/userUuidParam"
+      - $ref: "#/components/parameters/logDateParam"
+      - $ref: "#/components/parameters/emailAddressParam"
+      - $ref: "#/components/parameters/appNameParam"
+      requestBody:
+        description: Send by HTTP request.
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  type: array
+                  description: The driver daily document media and receipts.
+                  items:
+                    type: string
+                    format: binary
+        required: false
+      responses:
+        200:
+          description: Certified log was emailed successfully
+      security:
+      - BasicAuth: []
+      - OAuth2: []
+      x-codegen-request-body-name: body
   /api/v2/fmcsa/submit:
     post:
       tags:
@@ -2983,10 +3377,11 @@ paths:
           description: |
             Sort order:
               * `id` – Sort records by their id field in ascending order (DEFAULT)
-              * 'id' – Sort records by their id field in descending order
+              * '-id' – Sort records by their id field in descending order
               * 'timestamp' – Sort records by their timestamp field in ascending order
-              * 'timestamp' – Sort records by their timestamp field in descending order
+              * '-timestamp' – Sort records by their timestamp field in descending order
               * 'last-changed-date' – Sort records by their last change date field in ascending order
+              * '-last-changed-date' – Sort records by their last change date field in descending order
           schema:
             type: string
       responses:
@@ -4333,7 +4728,7 @@ paths:
       security:
       - BasicAuth: []
       - OAuth2: []
-                
+
 components:
   schemas:
     AccountProperty:
@@ -4474,7 +4869,13 @@ components:
           description: Account unique identifier
     Hos3AccountOnBoarding:
       type: object
+      required:
+        - operationalUnitUuid
       properties:
+        operationalUnitUuid:
+          type: string
+          format: uuid
+          description: uuid of the operational unit
         terminalUuid:
           type: string
           format: uuid
@@ -4485,6 +4886,98 @@ components:
           description: uuid of the carrier associated with the account (optional)
         driverSettings:
           $ref: '#/components/schemas/Driver'
+    Hos3DriverOnBoarding:
+      type: object
+      required:
+        - driverUuid
+      properties:
+        driverUuid:
+          type: string
+          format: uuid
+          description: uuid of the driver
+        terminalUuid:
+          type: string
+          format: uuid
+          description: uuid of the terminal associated with the driver (optional)
+        carrierUuid:
+          type: string
+          format: uuid
+          description: uuid of the carrier associated with the driver (optional)
+        driverSettings:
+          $ref: '#/components/schemas/Driver'
+    Hos3OperationalUnit:
+      type: object
+      required:
+        - uuid
+        - businessAccountUuid
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: uuid of the operational unit
+        businessAccountUuid:
+          type: string
+          format: uuid
+          description: uuid of the account
+        parentUuid:
+          type: string
+          format: uuid
+          description: uuid of the parent
+        customId:
+          type: string
+          description: the custom identifier
+        description:
+          type: string
+          description: the description
+        deleted:
+          type: boolean
+          description: the soft deleted flag
+    Hos3OperationalUnitDriver:
+      type: object
+      required:
+        - operationalUnitUuid
+        - driverUuid
+      properties:
+        operationalUnitUuid:
+          type: string
+          format: uuid
+          description: uuid of the operational unit
+        driverUuid:
+          type: string
+          format: uuid
+          description: uuid of the driver
+        driverId:
+          type: integer
+          format: int64
+          description: the identifier of the driver
+    Hos3OperationalUnitTree:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: uuid of the operational unit
+        businessAccountUuid:
+          type: string
+          format: uuid
+          description: uuid of the account
+        parentUuid:
+          type: string
+          format: uuid
+          description: uuid of the parent
+        customId:
+          type: string
+          description: the custom identifier
+        description:
+          type: string
+          description: the description
+        deleted:
+          type: boolean
+          description: the soft deleted flag
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hos3OperationalUnitTree'
     AlertNotification:
       required:
       - details
@@ -5286,55 +5779,101 @@ components:
     EventType:
       type: string
       enum:
-      - OffDuty
-      - Sleeper
-      - Driving
-      - OnDuty
-      - WaitingAtSite
-      - Remark
-      - Inter
-      - InterRP
-      - PersonalUse
-      - YardMoves
-      - ClearPU
-      - ClearYM
-      - Certify
-      - Login
-      - Logout
-      - PowerOn
-      - PowerOnRP
-      - PowerOff
-      - PowerOffRP
-      - MalPower
-      - MalSync
-      - MalTime
-      - MalPos
-      - MalRecord
-      - MalTransfer
-      - MalOther
-      - MalPowerClear
-      - MalSyncClear
-      - MalTimeClear
-      - MalPosClear
-      - MalRecordClear
-      - MalTransferClear
-      - MalOtherClear
-      - DiagPower
-      - DiagSync
-      - DiagMissing
-      - DiagTransfer
-      - DiagUnidentified
-      - DiagOther
-      - DiagPowerClear
-      - DiagSyncClear
-      - DiagMissingClear
-      - DiagTransferClear
-      - DiagUnidentifiedClear
-      - DiagOtherClear
-      - EldAuthenticationRemark
-      - EldUnauthenticationRemark
-      - AddedExceptionRemark
-      - RemovedExceptionRemark
+        - OffDuty
+        - Sleeper
+        - Driving
+        - OnDuty
+        - WaitingAtSite
+        - Remark
+        - AddedExceptionRemark
+        - RemovedExceptionRemark
+        - AsphaltBeginBreakRemark
+        - AsphaltEndBreakRemark
+        - BorderCrossingRemark
+        - CargoSecurementRemark
+        - CarrierInformationChangedRemark
+        - RulesetChangedRemark
+        - EldAuthenticationRemark
+        - EldUnauthenticationRemark
+        - HazMatBeginBreakRemark
+        - HazMatEndBreakRemark
+        - OffRoadRemark
+        - OnRoadRemark
+        - PreTripDvirNotPerformedRemark
+        - StartOfDayOdoRemark
+        - TollRoadBeginRemark
+        - TollRoadEndRemark
+        - VbusConnectedRemark
+        - VbusDisconnectedRemark
+        - SwitchVehicleRemark
+        - SwitchTrailerRemark
+        - DvirCompletedRemark
+        - ShippingDocChangedRemark
+        - AssumeRoleAsActiveDriverRemark
+        - RemoveRoleAsActiveDriverRemark
+        - StartTimeOfDayRemark
+        - EnableSBOffDutyPairingRemark
+        - DisableSBOffDutyPairingRemark
+        - EldIdentifier
+        - Inter
+        - InterRP
+        - PersonalUse
+        - PersonalConveyance
+        - YardMoves
+        - ClearPU
+        - ClearPC
+        - ClearYM
+        - Certify
+        - Login
+        - Logout
+        - PowerOn
+        - PowerOnRP
+        - PowerOff
+        - PowerOffRP
+        - MalPower
+        - MalSync
+        - MalTime
+        - MalPos
+        - MalRecord
+        - MalTransfer
+        - MalOther
+        - MalPowerClear
+        - MalSyncClear
+        - MalTimeClear
+        - MalPosClear
+        - MalRecordClear
+        - MalTransferClear
+        - MalOtherClear
+        - DiagPower
+        - DiagSync
+        - DiagMissing
+        - DiagTransfer
+        - DiagUnidentified
+        - DiagOther
+        - DiagPowerClear
+        - DiagSyncClear
+        - DiagMissingClear
+        - DiagTransferClear
+        - DiagUnidentifiedClear
+        - DiagOtherClear
+        - ExcludeDriveTime
+        - GpsNoFix
+        - VbusConnected
+        - TabletNotCharging
+        - SyncEngine
+        - DataTransferMonitoring
+        - UnconfirmedDataTransfer
+        - CanOffDutyDeferNone
+        - CanOffDutyDeferDay1
+        - CanOffDutyDeferDay2
+        - CanCycle1
+        - CanCycle2
+        - CanSouthZone
+        - CanNorthZone
+        - USAZone
+        - MexZone
+        - CanAdlHoursOption1
+        - CanAdlHoursOption2
     GpsSource:
       type: string
       enum:
@@ -5628,8 +6167,6 @@ components:
       - eventType
       - recordOrigin
       - recordStatus
-      - userId
-      - username
       - uuid
       type: object
       properties:
@@ -5744,9 +6281,6 @@ components:
         driverEdit:
           type: boolean
           description: Indicates if the event has been edited.
-        driverUuid:
-          type: string
-          format: uuid
         editReason:
           type: string
           description: |
@@ -5782,6 +6316,8 @@ components:
           format: date-time
         eventType:
           $ref: '#/components/schemas/EventType'
+        eventTypeSpecificData:
+          type: string
         excludeDrivingBeginTimestamp:
           type: string
           description: This is the begintime stamp for the excludeDriving for eventType
@@ -5814,6 +6350,11 @@ components:
         location:
           type: string
           description: The address where event was initiated.
+        logExceptionType:
+          $ref: '#/components/schemas/LogExceptionType'
+        logTimestamp:
+          type: string
+          format: date-time
         longitude:
           type: number
           description: Longitude of the location if available.
@@ -5932,6 +6473,32 @@ components:
       enum:
         - ES_TRANSLATION
         - XRS_TRANSLATION
+    DrivingRuleType:
+      type: string
+      enum:
+        - SHIFT_DRIVE_HOURS
+        - SHIFT_ELAPSED_HOURS
+        - CYCLE_DUTY_HOURS
+        - BREAK_DRIVE_HOURS
+        - CAN_CYCLE_DRIVE_HOURS
+        - CAN12_1_DAILY_DRIVE_HOURS
+        - CAN12_2_DAILY_DUTY_HOURS
+        - CAN13_1_SHIFT_DRIVE_HOURS
+        - CAN13_2_SHIFT_DUTY_HOURS
+        - CAN13_3_SHIFT_ELAPSED_HOURS
+        - CAN14_1AND2_DAILY_OFF_DUTY_10HOURS
+        - CAN14_3_DAILY_OFF_DUTY_2HOURS
+        - CAN16_DAILY_OFF_DUTY_DEFERRAL_HOURS
+        - CAN25_MAN_24OFF_DUTY_HOURS
+        - CAN26_CYCLE1_DUTY_HOURS
+        - CAN27A_CYCLE2_DUTY_HOURS
+        - CAN27B_CYCLE2_24OFF_DUTY_HOURS
+        - CAN63_OIL_WELL_CYCLE_DUTY_HOURS
+        - ALBERTA_SHIFT_DRIVE_HOURS
+        - ALBERTA_SHIFT_DUTY_HOURS
+        - ALBERTA_BREAK_HOURS
+        - MEX_SHIFT_DRIVE_HOURS
+        - MEX_BREAK_DRIVE_HOURS
     RecordOrigin:
       type: string
       enum:
@@ -6957,59 +7524,81 @@ components:
         displayName:
           type: string
           description: "The display name of the Permission"
+    DriverViolationForCalc:
+      type: object
+      properties:
+        drivingRuleType:
+          $ref: '#/components/schemas/DrivingRuleType'
+        iconLabel:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          description: 'Indicates the date and time as to when the Alert Notification
+            was triggered.Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ,
+            e.g: 1970-01-01T00:00:00.000Z)'
+          format: date-time
+        title:
+          type: string
+        toolTipText:
+          type: string
     DriverViolation:
       type: object
       properties:
-        recordIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-        userId:
-          type: array
-          items:
-            type: integer
-            format: int64
-        driverHistoryId:
-          type: array
-          items:
-            type: integer
-            format: int64
-        violationName:
-          type: string
-        limit:
-          type: string
-        terminalId:
-          type: array
-          items:
-            type: integer
-            format: int64
-        subsetId:
-          type: array
-          items:
-            type: integer
-            format: int64
-        fromTimestamp:
-          type: string
-          format: date-time
-        toTimestamp:
-          type: string
-          format: date-time
-        fromChangeTimestamp:
-          type: string
-          format: date-time
-        toChangeTimestamp:
-          type: string
-          format: date-time
-        system:
-          type: boolean
-        offset:
+        accountId:
           type: integer
-          description: Version number of the Product.
-          format: int32
+          format: int64
+          description: The id of the Account that owns this record.
+        alertSent:
+          type: boolean
         driverAlias:
           type: string
-          description: The id of the Driver(alias) that is tied to this status.  
+          description: The id of the Driver(alias) that is tied to this status.
+        driverHistoryId:
+          type: integer
+          format: int64
+          description: The id for associated Driver History record that triggered this Driver Violation
+        iconLabel:
+          type: string
+        id:
+          type: integer
+          format: int64
+          description: "Unique Identifier"
+        lastChangedDate:
+          type: string
+          description: "Auto-generated timestamp of the last change made to this record
+            Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ, e.g: 1970-01-01T00:00:00.000Z)"
+          format: date-time
+        limit:
+          type: string
+          description: The limit at which when the violation would occur.
+        message:
+          type: string
+        subsetId:
+          type: integer
+          format: int64
+          description: Indicates the Subset of the Terminal where the Driver is assigned
+        terminalId:
+          type: integer
+          format: int64
+          description: Id of the Terminal where the Driver is assigned
+        timestamp:
+          type: string
+          description: 'Indicates the date and time as to when the Alert Notification
+            was triggered.Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ,
+            e.g: 1970-01-01T00:00:00.000Z)'
+          format: date-time
+        title:
+          type: string
+        toolTipText:
+          type: string
+        userId:
+          type: integer
+          format: int64
+          description: The id of the Driver who owns the Violation.
+        violationName:
+          $ref: '#/components/schemas/DrivingRuleType'
     Report:
       type: object
       properties:
@@ -7141,8 +7730,8 @@ components:
         system:
           type: boolean
           description: Indicates if a User Role is system or not.
-    DriverCalc :
-      required :
+    DriverCalc:
+      required:
         - driverHistoryId
         - userId
         - violations
@@ -7161,6 +7750,9 @@ components:
           type: string
           description: "Timestamp value of the Driver’s cycle reset Note: Format is in timestamp and timezone (YYYY-MM-DDTHH:MM:SS.sssZ, e.g: 1970-01-01T00:00:00.000Z)"
           format: date-time
+        driverAlias:
+          type: string
+          description: The id of the Driver(alias) that is tied to this status.
         driverHistoryId :
           type: integer
           description: The id of the Driver History associated with the Driver Calc
@@ -7182,15 +7774,15 @@ components:
           description: The id of the Driver associated with the Driver Calc Record.
           format: int64
         violations :
-          type: array
+          type: object
+          properties:
+            DriverViolations:
+              type: array
+              items:
+                $ref: '#/components/schemas/DriverViolationForCalc'
           description: Driver Violations are recorded instances wherein the Driver has committed Driving, Shift, or Cycle Violations. Whenever a Driver
             has exceeded the maximum time allowed for an OnDuty or a Driving status within a given time period or a series of time periods,
             these Driver Violations are recorded.
-          items:
-            $ref: '#/components/schemas/DriverViolation'
-        driverAlias:
-          type: string
-          description: The id of the Driver(alias) that is tied to this status.    
     Terminal:
       required:
       - name
@@ -7260,6 +7852,9 @@ components:
         street:
           type: string
           description: 'The street where the Terminal is located'
+        streetAddress2:
+          type: string
+          description: 'Additional address information'
         terminalCode:
           type: string
           description: 'The optional in-account code used to identify the Terminal'
@@ -7612,7 +8207,19 @@ components:
         userId:
           type: integer
           format: int64
-          description: "ID of Driver associated with this data."  
+          description: "ID of Driver associated with this data."
+    LogExceptionType:
+      type: string
+      enum:
+        - UNAPPROVED
+        - APPROVED
+        - LOAD_CHANGED
+        - CODRIVER_CHANGED
+        - NOTES_CHANGED
+        - US_CYCLE_RESET_REJECTED
+        - US_CYCLE_RESET_REMOVED
+        - US_CYCLE_RESET_ADDED
+        - DRIVER_ACTIVE
         
   parameters:
     accountUuidHeader:
@@ -7970,10 +8577,10 @@ components:
         type: array
         items:
           type: string
-    driverUuidParam:
-      name: driver-uuid
+    userUuidParam:
+      name: user-uuid
       in: query
-      description: Retrieves matching records with the specified driver's UUID (e.g. driver-uuid=96e2d49f-abe4-4a65-a808-5d57917f93d9)
+      description: Retrieves matching records with the specified user's UUID (e.g. user-uuid=96e2d49f-abe4-4a65-a808-5d57917f93d9)
       schema:
         type: string
         format: uuid
@@ -8239,6 +8846,60 @@ components:
       schema:
         type: integer
         format: int64
+    keyArrayParam:
+      name: key
+      in: query
+      description: A comma separated list of keys. Retrieves matching records
+        for a specific key (e.g. key=HOS_HOME_TERMINAL_STREET, key=HOS_HOME_TERMINAL_STREET,HOS_HOME_TERMINAL_CITY)
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    nameArrayParam:
+      name: name
+      in: query
+      description: A comma separated list of names. Retrieves matching records
+        for a specific name (e.g. name=geocode.service, name=geocode.service,os.carrier)
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    parentUuidParam:
+      name: parent-uuid
+      in: query
+      description: Retrieves matching records with the specified UUID (e.g. uuid=96e2d49f-abe4-4a65-a808-5d57917f93d9,
+        all UUIDs by default)
+      schema:
+        type: string
+        format: uuid
+    businessAccountUuidParam:
+      name: business-account-uuid
+      in: query
+      description: Retrieves matching records with the specified UUID (e.g. uuid=96e2d49f-abe4-4a65-a808-5d57917f93d9,
+        all UUIDs by default)
+      schema:
+        type: string
+        format: uuid
+    operationalUnitUuidParam:
+      name: operational-unit-uuid
+      in: query
+      description: Retrieves matching records with the specified UUID (e.g. uuid=96e2d49f-abe4-4a65-a808-5d57917f93d9,
+        all UUIDs by default)
+      schema:
+        type: string
+        format: uuid
+    driverUuidParam:
+      name: driver-uuid
+      in: query
+      description: Retrieves matching records with the specified UUID (e.g. uuid=96e2d49f-abe4-4a65-a808-5d57917f93d9,
+        all UUIDs by default)
+      schema:
+        type: string
+        format: uuid
 
   securitySchemes:
     BasicAuth:
